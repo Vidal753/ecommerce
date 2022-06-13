@@ -5,6 +5,7 @@
 		<div class="col-lg-6">
 			<div class="box-element" id="form-wrapper">
 				<form id="form">
+                    {% csrf_token %}
 					<div id="user-info">
 						<div class="form-field">
 							<input required class="form-control" type="text" name="name" placeholder="Name..">
@@ -70,7 +71,7 @@
 
     <script type="text/javascript">
         let shipping = '{{ order.shipping }}';
-        let total = '{{ order.get_cart_total|floatformat:2 }}'
+        let total = '{{ order.get_cart_total }}'
 
         if (shipping === 'False'){
             document.getElementById('shipping-info').innerHTML = '';
@@ -84,6 +85,12 @@
             document.getElementById('form-wrapper').classList.add('hidden');
             document.getElementById('payment-info').classList.remove('hidden');
         }
+
+        // For incognito mode
+        let form = document.getElementById('form')
+        csrftoken = form.getElementsByTagName('input')[0].value
+        console.log('NewToke: ', form.getElementsByTagName('input')[0].value )
+
 
 
         let form = document.getElementById('form');
@@ -124,6 +131,26 @@
                 userFormData.name = form.name.value
                 userFormData.email = form.email.value
             }
+
+            const url = '/process_order/'
+            fetch(url,{
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrftoken,
+                },
+                body: JSON.stringify({
+                    'form': userFormData,
+                    'shipping': shippingInfo,
+                })
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    console.log('Success:',data);
+                    alert('Transaction completed');
+                    window.location.href = "{% url 'store' %}"
+                })
         }
+
     </script>
 {% endblock content %}

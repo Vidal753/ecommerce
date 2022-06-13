@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-5q3b!_=+&p6(dp+qyy4e5+0f7ekltmoco-=g&cg1wut5+w9&j(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['crummly.herokuapp.com']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -77,12 +77,8 @@ WSGI_APPLICATION = 'ecommerce.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'det9nn5t6bqdog',
-        'HOST': 'ec2-52-44-13-158.compute-1.amazonaws.com',
-        'USER': 'fsxxytxbruwgyc',
-        'PASSWORD': '0d632ccdf0165e93cf19d32980436ad17106f0ae383e7ac6420a8c05fc9d7aa7',
-        'PORT': '5432',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
