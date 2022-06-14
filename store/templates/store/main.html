@@ -10,7 +10,7 @@
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
     <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
-
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script type="text/javascript">
         let user = '{{ request.user }}'
 
@@ -32,33 +32,35 @@
         const csrftoken = getToken('csrftoken');
 
         function getCookie(name) {
-		    let cookieArr = document.cookie.split(";");
+            let cookieArr = document.cookie.split(";");
 
-		    for(let i = 0; i < cookieArr.length; i++) {
-		        let cookiePair = cookieArr[i].split("=");
+            for (let i = 0; i < cookieArr.length; i++) {
+                let cookiePair = cookieArr[i].split("=");
 
-		        if(name === cookiePair[0].trim()) {
-		            return decodeURIComponent(cookiePair[1]);
-		        }
-		    }
+                if (name === cookiePair[0].trim()) {
+                    return decodeURIComponent(cookiePair[1]);
+                }
+            }
 
-		    return null;
-		}
-		let cart = JSON.parse(getCookie('cart'))
-		if (cart == undefined){
-			cart = {}
-			console.log('Cart Created!', cart)
-			document.cookie ='cart=' + JSON.stringify(cart) + ";domain=;path=/"
-		}
-		console.log('Cart:', cart)
+            return null;
+        }
+
+        let cart = JSON.parse(getCookie('cart'))
+        if (cart == undefined) {
+            cart = {}
+            console.log('Cart Created!', cart)
+            document.cookie = 'cart=' + JSON.stringify(cart) + ";domain=;path=/"
+        }
+        console.log('Cart:', cart)
 
     </script>
 
 </head>
+
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="{% url 'store' %}">Ecom</a>
+<nav class="navbar navbar-expand-lg navbar-dark " style="background-color: #1a2336">
+    <a class="navbar-brand" href="{% url 'store' %}">Crummly</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -67,16 +69,16 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="{% url 'store' %}">Store<span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="{% url 'store' %}">Catálogo<span class="sr-only">(current)</span></a>
             </li>
         </ul>
         <div class="form-inline my-2 my-lg-0">
-            <a href="#" class="btn btn-warning">Login</a>
+            <a href="#" class="btn btn-warning d-none">Login</a>
 
             <a href="{% url 'cart' %}">
                 <img id="cart-icon" src="{% static 'images/cart.png' %}">
             </a>
-            <p id="cart-total">{{ cartItems }}</p>
+            <p id="cart-total" class="d-none" style="height: 22px">{{ cartItems }}</p>
 
         </div>
     </div>
@@ -89,7 +91,6 @@
 
     {% endblock content %}
 </div>
-
 
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
@@ -105,5 +106,11 @@
 
 <script type="text/javascript" src="{% static 'js/cart-2.js' %}"></script>
 
+<script>
+    cart = $('#cart-total').text()
+    if (cart != '0') {
+        $('#cart-total').removeClass('d-none')
+    }
+</script>
 </body>
 </html>
