@@ -17,7 +17,7 @@
 
                     <div id="shipping-info">
                         <hr>
-                        <p>Shipping Information:</p>
+                        <p>Informacion del Pedido:</p>
                         <hr>
                         <div class="form-field">
                             <input class="form-control" type="text" name="address" placeholder="Address..">
@@ -43,17 +43,17 @@
 
             <br>
             <div class="box-element hidden" id="payment-info">
-                <small>Paypal Options</small>
-                <button id="make-payment">Make Payment</button>
+                <small>Confirmacion de perdido</small>
+                <button id="make-payment" class="btn btn-outline-success btn-sm rounded">Confirmar</button>
             </div>
 
         </div>
 
         <div class="col-lg-6">
             <div class="box-element">
-                <a class="btn btn-outline-dark" href="{% url 'cart' %}">&#x2190; Back to Cart</a>
+                <a class="btn btn-outline-dark" href="{% url 'cart' %}">&#x2190; Volver al Carrito</a>
                 <hr>
-                <h3>Order Summary</h3>
+                <h3>Resumen</h3>
                 <hr>
                 {% for item in items %}
                     <div class="cart-row">
@@ -63,13 +63,13 @@
                         <div style="flex:1"><p>x{{ item.quantity }}</p></div>
                     </div>
                 {% endfor %}
-                <h5>Items: {{ order.get_cart_items }}</h5>
-                <h5>Total: ${{ order.get_cart_total|floatformat:2 }}</h5>
+                <h5>Productos: {{ order.get_cart_items }}</h5>
+                <h5>Total: C$ {{ order.get_cart_total|floatformat:2 }}</h5>
             </div>
         </div>
     </div>
-
     <script type="text/javascript">
+
         let shipping = '{{ order.shipping }}';
         let total = '{{ order.get_cart_total }}'
 
@@ -149,13 +149,16 @@
                 .then((response) => response.json())
                 .then((data) => {
                     console.log('Success:', data);
-                    alert('Transaction completed');
-
 
 				    cart = {}
 				    document.cookie ='cart=' + JSON.stringify(cart) + ";domain=;path=/"
 
-                    window.location.href = "{% url 'store' %}"
+                    Swal.fire('Pedido Realizado',
+                        'En unos momentos nos pondremos en contacto contigo para realizar el pago del pedido!',
+                        'success').then(() =>{
+                             window.location.href = "{% url 'store' %}"
+                    })
+
                 })
         }
 
