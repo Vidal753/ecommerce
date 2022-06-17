@@ -78,7 +78,7 @@
             <a href="{% url 'cart' %}">
                 <img id="cart-icon" src="{% static 'images/cart.png' %}">
             </a>
-            <p id="cart-total" class="d-none" style="height: 22px">{{ cartItems }}</p>
+            <p id="cart-total" style="height: 22px">{{ cartItems }}</p>
 
         </div>
     </div>
@@ -105,12 +105,12 @@
         crossorigin="anonymous"></script>
 
 <script type="text/javascript" src="{% static 'js/cart-2.js' %}"></script>
-
-<script>
-    cart = $('#cart-total').text()
-    if (cart != '0') {
-        $('#cart-total').removeClass('d-none')
-    }
-</script>
+{##}
+{#<script>#}
+{#    cart = $('#cart-total').text()#}
+{#    if (cart != '0') {#}
+{#        $('#cart-total').removeClass('d-none')#}
+{#    }#}
+{#</script>#}
 </body>
 </html>
